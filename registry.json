@@ -193,6 +193,20 @@
       "doc": "skills/doc_writer/SKILL.md"
     },
     {
+      "id": "npu_inference_optimization",
+      "name": "npu-inference-optimization",
+      "kind": "skill",
+      "category": "dev-tools",
+      "source": "fusion-skills",
+      "description": {
+        "zh": "昇腾 NPU 推理吞吐无损优化技能（vLLM-Ascend，MTP 投机解码），实测 Qwen3.8-27B 提速 39.5%",
+        "en": "Lossless inference throughput optimization for LLM serving on Ascend NPU (vLLM-Ascend, MTP speculative decoding); proven +39.5% on Qwen3.8-27B"
+      },
+      "doc": "skills/npu-inference-optimization/SKILL.md",
+      "source_path": "skills/npu-inference-optimization/",
+      "version": "1.0.0"
+    },
+    {
       "id": "fusion-console",
       "name": "fusion-console",
       "kind": "app",
