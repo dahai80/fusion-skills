@@ -8,9 +8,13 @@ Web search skill with citable, verifiable results
 
 ## Install
 
-Installation and updates are managed inside the fusion Shell
-(`fusion-web-shell`); the site marketplace page maps to this document.
+In-repo skill source: hosts fetch `skills/web_search/` (this directory) and
+register the skill. `registry.json` pins `source_path: skills/web_search/`
+and version; artifact-based packaging for skills follows the same pipeline
+as plugins (`scripts/publish_artifacts.py` in `fusion-plugins-ecosystem`).
+Install and updates also work inside the fusion Shell (`fusion-web-shell`).
 
 ## Source
 
-Implementation lives in the `fusion-plugins-ecosystem` module of the fusion monorepo.
+Implementation lives in the `fusion-plugins-ecosystem` module of the fusion
+monorepo.
