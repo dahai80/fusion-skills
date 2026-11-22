@@ -5,10 +5,12 @@ Public content repository for the fusion ecosystem: curated **plugins**,
 ([fusion-site](https://github.com/dahai80/fusion-site)) maps into this repo —
 each marketplace card links to its document here — and
 `registry.json` is the machine-readable mapping (id, kind, category, source
-module).
+module). Distribution model: the marketplace publishes, consumers install —
+downloads link to each source repo's GitHub Releases page.
 
 ## Layout
 
+- `apps/` — host apps (console, cowork, agent-studio): marketplace consumers, not marketplace goods
 - `plugins/` — host-module plugins (file access, document tools, panels)
 - `connectors/` — local-service connectors (inference, image/video, speech)
 - `skills/` — agent skills (web search, long-form writing, code review)

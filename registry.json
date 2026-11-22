@@ -169,6 +169,45 @@
                 "en": "Long-form writing skill; drafts land in the artifact store"
             },
             "doc": "skills/doc_writer.md"
+        },
+        {
+            "id": "fusion-console",
+            "name": "fusion-console",
+            "kind": "app",
+            "category": "app",
+            "source": "fusion-console",
+            "description": {
+                "zh": "本地控制台：一键管理 fusion 服务、模型与日志。",
+                "en": "Local console: manage fusion services, models and logs in one place."
+            },
+            "doc": "apps/fusion-console.md",
+            "releases": "https://github.com/dahai80/fusion-console/releases"
+        },
+        {
+            "id": "fusion-cowork",
+            "name": "fusion-cowork",
+            "kind": "app",
+            "category": "app",
+            "source": "fusion-cowork",
+            "description": {
+                "zh": "DAG 工作流引擎与协作界面：把多步任务编排成可视化流程。",
+                "en": "DAG workflow engine with a collaboration UI: orchestrate multi-step tasks visually."
+            },
+            "doc": "apps/fusion-cowork.md",
+            "releases": "https://github.com/dahai80/fusion-cowork/releases"
+        },
+        {
+            "id": "fusion-agent-studio",
+            "name": "fusion-agent-studio",
+            "kind": "app",
+            "category": "app",
+            "source": "fusion-agent-studio",
+            "description": {
+                "zh": "Agent 工作室：构建、调试和运行本地智能体。",
+                "en": "Agent studio: build, debug and run local agents."
+            },
+            "doc": "apps/fusion-agent-studio.md",
+            "releases": "https://github.com/dahai80/fusion-agent-studio/releases"
         }
     ]
 }
