@@ -96,7 +96,7 @@
                 "zh": "为 Cowork 管线提供 diff 审查节点，输出结构化评审意见",
                 "en": "Diff review node for Cowork pipelines with structured findings"
             },
-            "doc": "skills/fusion-code-review-skill.md"
+            "doc": "skills/fusion-code-review-skill/SKILL.md"
         },
         {
             "id": "image_gen",
@@ -156,7 +156,7 @@
                 "zh": "联网检索技能，结果可引用可核查",
                 "en": "Web search skill with citable, verifiable results"
             },
-            "doc": "skills/web_search.md"
+            "doc": "skills/web_search/SKILL.md"
         },
         {
             "id": "doc_writer",
@@ -168,7 +168,7 @@
                 "zh": "长文写作技能，成稿入工件库",
                 "en": "Long-form writing skill; drafts land in the artifact store"
             },
-            "doc": "skills/doc_writer.md"
+            "doc": "skills/doc_writer/SKILL.md"
         },
         {
             "id": "fusion-console",
