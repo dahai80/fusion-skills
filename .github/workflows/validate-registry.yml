@@ -1,0 +1,23 @@
+name: validate-registry
+
+on:
+  pull_request:
+    paths:
+      - "registry.json"
+      - "plugins/**"
+      - "connectors/**"
+      - "skills/**"
+      - "apps/**"
+      - "scripts/validate_registry.py"
+  push:
+    branches: [main]
+    paths:
+      - "registry.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate registry.json (schema v2)
+        run: python3 scripts/validate_registry.py --check-urls

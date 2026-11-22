@@ -1,0 +1,50 @@
+name: package-skills
+
+# Skill packaging automation (CONTRIBUTING.md): every push to main that
+# touches skills/ packages each changed skill into skill-<id>-<shortsha>.tar.gz
+# and attaches the archives + SHA256SUMS to the skills-auto release. The
+# in-repo path stays the primary install anchor; the archives are a checksummed
+# convenience mirror.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect changed skills
+        id: changed
+        run: |
+          changed=$(git diff --name-only "${{ github.event.before }}" HEAD -- skills/ 2>/dev/null | cut -d/ -f2 | sort -u || true)
+          if [ -z "$changed" ]; then
+            # event.before can be empty on the first run; package everything.
+            changed=$(ls -d skills/*/ 2>/dev/null | xargs -n1 basename || true)
+          fi
+          echo "skills=$(echo $changed | tr ' ' ',')" >> "$GITHUB_OUTPUT"
+      - name: Package each skill
+        if: steps.changed.outputs.skills != ''
+        run: |
+          mkdir -p dist
+          for id in ${{ steps.changed.outputs.skills }}; do
+            [ -d "skills/$id" ] || continue
+            tar -czf "dist/skill-${id}-${GITHUB_SHA::7}.tar.gz" -C "skills/$id" .
+          done
+          cd dist && shasum -a 256 *.tar.gz > SHA256SUMS && ls -la
+      - name: Upload to skills-auto release
+        if: steps.changed.outputs.skills != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view skills-auto --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create skills-auto --repo "$GITHUB_REPOSITORY" \
+              --title "skills-auto (CI-packaged)" \
+              --notes "Auto-packaged skill archives. sha256 in SHA256SUMS; primary install anchor is the in-repo path at a pinned commit."
+          gh release upload skills-auto dist/* --repo "$GITHUB_REPOSITORY" --clobber
