@@ -29,7 +29,8 @@ jobs:
             # event.before can be empty on the first run; package everything.
             changed=$(ls -d skills/*/ 2>/dev/null | xargs -n1 basename || true)
           fi
-          echo "skills=$(echo $changed | tr ' ' ',')" >> "$GITHUB_OUTPUT"
+          # space-joined: the packaging loop below splits on whitespace
+          echo "skills=$(echo $changed)" >> "$GITHUB_OUTPUT"
       - name: Package each skill
         if: steps.changed.outputs.skills != ''
         run: |
