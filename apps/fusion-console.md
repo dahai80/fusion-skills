@@ -2,9 +2,9 @@
 
 **Kind**: app (host/consumer) · **Source repo**: `dahai80/fusion-console`
 
-Local console: manage fusion services, models and logs in one place.
+An advanced LLM (brain) manages base LLMs (work) to automate work tasks, with configurable models and working style.
 
-本地控制台：一键管理 fusion 服务、模型与日志。
+本地控制台：高级 LLM（brain）一键管理基础 LLM（work）自动化完成工作任务、可以配置模型与工作方式。
 
 ## Install
 
