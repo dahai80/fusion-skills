@@ -181,7 +181,52 @@
                 "en": "An advanced LLM (brain) manages base LLMs (work) to automate work tasks, with configurable models and working style."
             },
             "doc": "apps/fusion-console.md",
-            "releases": "https://github.com/dahai80/fusion-console/releases"
+            "releases": "https://github.com/dahai80/fusion-console/releases",
+            "version": "v0.2.23",
+            "artifacts": [
+                {
+                    "os": "darwin",
+                    "arch": "amd64",
+                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-amd64.tar.gz",
+                    "sha256": "9178f8ede3a39ceb509c595c1d579fe97057aee8e39c49de8f83e94b22795be4",
+                    "size": 34171636
+                },
+                {
+                    "os": "darwin",
+                    "arch": "arm64",
+                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-arm64.tar.gz",
+                    "sha256": "25037f2ce3bb3344c527996c2b0f282490f40063ed1f08028d2fd9b58ca82ed5",
+                    "size": 32208708
+                },
+                {
+                    "os": "darwin",
+                    "arch": "universal",
+                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-universal.dmg",
+                    "sha256": "610a87ba343d910bbfc6ed45b8f30fdfb5269986ba52e57819774605abcefd49",
+                    "size": 73131397
+                },
+                {
+                    "os": "linux",
+                    "arch": "amd64",
+                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-amd64.tar.gz",
+                    "sha256": "ccc3cdb70c3aedcbdce549340768d63bcb54f372238f637ba4be09cde85c5a10",
+                    "size": 33246655
+                },
+                {
+                    "os": "linux",
+                    "arch": "arm64",
+                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-arm64.tar.gz",
+                    "sha256": "42d5404b3a73c3ae75ba6951a309f7dcd085fa4a6200f0bfa7fa400cb6cdcb0a",
+                    "size": 30559136
+                },
+                {
+                    "os": "windows",
+                    "arch": "amd64",
+                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-windows-amd64.zip",
+                    "sha256": "101f5b032afb12485297c06dbb12966ab521edb31fcd3213e21cefa42726e39c",
+                    "size": 33342022
+                }
+            ]
         },
         {
             "id": "fusion-cowork",
@@ -209,5 +254,6 @@
             "doc": "apps/fusion-agent-studio.md",
             "releases": "https://github.com/dahai80/fusion-agent-studio/releases"
         }
-    ]
+    ],
+    "schemaVersion": 2
 }
