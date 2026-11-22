@@ -1,6 +1,7 @@
 name: validate-registry
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - "registry.json"
