@@ -1,259 +1,281 @@
 {
-    "version": 1,
-    "repo": "https://github.com/dahai80/fusion-skills",
-    "entries": [
+  "version": 2,
+  "repo": "https://github.com/dahai80/fusion-skills",
+  "entries": [
+    {
+      "id": "file_access",
+      "name": "file-access",
+      "kind": "plugin",
+      "category": "file",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "受权限引擎管控的本地文件读写插件",
+        "en": "Local file read/write plugin, gated by the permission engine"
+      },
+      "doc": "plugins/file_access.md"
+    },
+    {
+      "id": "caveman_compressor",
+      "name": "caveman-compressor",
+      "kind": "plugin",
+      "category": "code",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "上下文压缩插件，长会话省 token",
+        "en": "Context compaction plugin; saves tokens on long sessions"
+      },
+      "doc": "plugins/caveman_compressor.md",
+      "artifacts": [
         {
-            "id": "file_access",
-            "name": "file-access",
-            "kind": "plugin",
-            "category": "file",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "受权限引擎管控的本地文件读写插件",
-                "en": "Local file read/write plugin, gated by the permission engine"
-            },
-            "doc": "plugins/file_access.md"
-        },
-        {
-            "id": "caveman_compressor",
-            "name": "caveman-compressor",
-            "kind": "plugin",
-            "category": "code",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "上下文压缩插件，长会话省 token",
-                "en": "Context compaction plugin; saves tokens on long sessions"
-            },
-            "doc": "plugins/caveman_compressor.md"
-        },
-        {
-            "id": "doc_tools",
-            "name": "doc-tools",
-            "kind": "plugin",
-            "category": "office",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "文档处理插件：docx / xlsx / pptx 读写",
-                "en": "Document plugin: docx / xlsx / pptx read and write"
-            },
-            "doc": "plugins/doc_tools.md"
-        },
-        {
-            "id": "fusion-doc-excel-report",
-            "name": "fusion-doc-excel-report",
-            "kind": "plugin",
-            "category": "office",
-            "source": "fusion-doc",
-            "description": {
-                "zh": "上传 Excel 自动生成财务报表，支持模板渲染与多 sheet 汇总",
-                "en": "Upload spreadsheets to generate financial reports with template rendering and multi-sheet rollup"
-            },
-            "doc": "plugins/fusion-doc-excel-report.md"
-        },
-        {
-            "id": "fusion-rag-ragkb",
-            "name": "fusion-rag-ragkb",
-            "kind": "plugin",
-            "category": "ai",
-            "source": "fusion-rag",
-            "description": {
-                "zh": "离线向量知识库接入，为任意模块提供文档问答能力",
-                "en": "Offline vector knowledge base; adds document Q&A to any host module"
-            },
-            "doc": "plugins/fusion-rag-ragkb.md"
-        },
-        {
-            "id": "fusion-ecommerce-radar",
-            "name": "fusion-ecommerce-radar",
-            "kind": "plugin",
-            "category": "ecommerce",
-            "source": "fusion-ecommerce",
-            "description": {
-                "zh": "抖音商品趋势分析，热销品类监控与选品建议推送",
-                "en": "Douyin product trend analysis with hot-category monitoring and picks"
-            },
-            "doc": "plugins/fusion-ecommerce-radar.md"
-        },
-        {
-            "id": "fusion-gupiao-panel",
-            "name": "fusion-gupiao-panel",
-            "kind": "plugin",
-            "category": "domain",
-            "source": "fusion-gupiao",
-            "description": {
-                "zh": "A 股实时行情嵌入面板，自选股提醒与指标快照",
-                "en": "Embedded A-share quote panel with watchlist alerts and snapshots"
-            },
-            "doc": "plugins/fusion-gupiao-panel.md"
-        },
-        {
-            "id": "fusion-code-review-skill",
-            "name": "fusion-code-review-skill",
-            "kind": "skill",
-            "category": "dev-tools",
-            "source": "fusion-code",
-            "description": {
-                "zh": "为 Cowork 管线提供 diff 审查节点，输出结构化评审意见",
-                "en": "Diff review node for Cowork pipelines with structured findings"
-            },
-            "doc": "skills/fusion-code-review-skill/SKILL.md"
-        },
-        {
-            "id": "image_gen",
-            "name": "image-gen",
-            "kind": "connector",
-            "category": "image",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "本地图像生成连接器（comfyui / mlx 后端）",
-                "en": "Local image-generation connector (comfyui / mlx backends)"
-            },
-            "doc": "connectors/image_gen.md"
-        },
-        {
-            "id": "video_gen",
-            "name": "video-gen",
-            "kind": "connector",
-            "category": "image",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "视频生成连接器，接本地生成管线",
-                "en": "Video-generation connector for local pipelines"
-            },
-            "doc": "connectors/video_gen.md"
-        },
-        {
-            "id": "mlx_inference",
-            "name": "mlx-inference",
-            "kind": "connector",
-            "category": "infer",
-            "source": "fusion-mlx",
-            "description": {
-                "zh": "fusion-mlx 推理连接器，localhost:11434",
-                "en": "fusion-mlx inference connector on localhost:11434"
-            },
-            "doc": "connectors/mlx_inference.md"
-        },
-        {
-            "id": "speech",
-            "name": "speech",
-            "kind": "connector",
-            "category": "speech",
-            "source": "fusion-speech",
-            "description": {
-                "zh": "本地语音连接器，接本地 STT/TTS 服务",
-                "en": "Local speech connector bridging local STT/TTS services"
-            },
-            "doc": "connectors/speech.md"
-        },
-        {
-            "id": "web_search",
-            "name": "web-search",
-            "kind": "skill",
-            "category": "web",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "联网检索技能，结果可引用可核查",
-                "en": "Web search skill with citable, verifiable results"
-            },
-            "doc": "skills/web_search/SKILL.md"
-        },
-        {
-            "id": "doc_writer",
-            "name": "doc-writer",
-            "kind": "skill",
-            "category": "office",
-            "source": "fusion-plugins-ecosystem",
-            "description": {
-                "zh": "长文写作技能，成稿入工件库",
-                "en": "Long-form writing skill; drafts land in the artifact store"
-            },
-            "doc": "skills/doc_writer/SKILL.md"
-        },
-        {
-            "id": "fusion-console",
-            "name": "fusion-console",
-            "kind": "app",
-            "category": "app",
-            "source": "fusion-console",
-            "description": {
-                "zh": "本地控制台：高级 LLM（brain）一键管理基础 LLM（work）自动化完成工作任务、可以配置模型与工作方式。",
-                "en": "An advanced LLM (brain) manages base LLMs (work) to automate work tasks, with configurable models and working style."
-            },
-            "doc": "apps/fusion-console.md",
-            "releases": "https://github.com/dahai80/fusion-console/releases",
-            "version": "v0.2.23",
-            "artifacts": [
-                {
-                    "os": "darwin",
-                    "arch": "amd64",
-                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-amd64.tar.gz",
-                    "sha256": "9178f8ede3a39ceb509c595c1d579fe97057aee8e39c49de8f83e94b22795be4",
-                    "size": 34171636
-                },
-                {
-                    "os": "darwin",
-                    "arch": "arm64",
-                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-arm64.tar.gz",
-                    "sha256": "25037f2ce3bb3344c527996c2b0f282490f40063ed1f08028d2fd9b58ca82ed5",
-                    "size": 32208708
-                },
-                {
-                    "os": "darwin",
-                    "arch": "universal",
-                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-universal.dmg",
-                    "sha256": "610a87ba343d910bbfc6ed45b8f30fdfb5269986ba52e57819774605abcefd49",
-                    "size": 73131397
-                },
-                {
-                    "os": "linux",
-                    "arch": "amd64",
-                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-amd64.tar.gz",
-                    "sha256": "ccc3cdb70c3aedcbdce549340768d63bcb54f372238f637ba4be09cde85c5a10",
-                    "size": 33246655
-                },
-                {
-                    "os": "linux",
-                    "arch": "arm64",
-                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-arm64.tar.gz",
-                    "sha256": "42d5404b3a73c3ae75ba6951a309f7dcd085fa4a6200f0bfa7fa400cb6cdcb0a",
-                    "size": 30559136
-                },
-                {
-                    "os": "windows",
-                    "arch": "amd64",
-                    "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-windows-amd64.zip",
-                    "sha256": "101f5b032afb12485297c06dbb12966ab521edb31fcd3213e21cefa42726e39c",
-                    "size": 33342022
-                }
-            ]
-        },
-        {
-            "id": "fusion-cowork",
-            "name": "fusion-cowork",
-            "kind": "app",
-            "category": "app",
-            "source": "fusion-cowork",
-            "description": {
-                "zh": "DAG 工作流引擎与协作界面：把多步任务编排成可视化流程。",
-                "en": "DAG workflow engine with a collaboration UI: orchestrate multi-step tasks visually."
-            },
-            "doc": "apps/fusion-cowork.md",
-            "releases": "https://github.com/dahai80/fusion-cowork/releases"
-        },
-        {
-            "id": "fusion-agent-studio",
-            "name": "fusion-agent-studio",
-            "kind": "app",
-            "category": "app",
-            "source": "fusion-agent-studio",
-            "description": {
-                "zh": "Agent 工作室：构建、调试和运行本地智能体。",
-                "en": "Agent studio: build, debug and run local agents."
-            },
-            "doc": "apps/fusion-agent-studio.md",
-            "releases": "https://github.com/dahai80/fusion-agent-studio/releases"
+          "os": "any",
+          "arch": "any",
+          "url": "https://github.com/dahai80/fusion-skills/releases/download/registry-artifacts/caveman_compressor-v0.12.0-any-any.tar.gz",
+          "sha256": "b0f7d85e86f7a6a197306b1682eb74a68990eace1ba3b1eb0db319bf17d4e56d",
+          "size": 1329
         }
-    ],
-    "schemaVersion": 2
+      ],
+      "version": "0.12.0"
+    },
+    {
+      "id": "doc_tools",
+      "name": "doc-tools",
+      "kind": "plugin",
+      "category": "office",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "文档处理插件：docx / xlsx / pptx 读写",
+        "en": "Document plugin: docx / xlsx / pptx read and write"
+      },
+      "doc": "plugins/doc_tools.md"
+    },
+    {
+      "id": "fusion-doc-excel-report",
+      "name": "fusion-doc-excel-report",
+      "kind": "plugin",
+      "category": "office",
+      "source": "fusion-doc",
+      "description": {
+        "zh": "上传 Excel 自动生成财务报表，支持模板渲染与多 sheet 汇总",
+        "en": "Upload spreadsheets to generate financial reports with template rendering and multi-sheet rollup"
+      },
+      "doc": "plugins/fusion-doc-excel-report.md"
+    },
+    {
+      "id": "fusion-rag-ragkb",
+      "name": "fusion-rag-ragkb",
+      "kind": "plugin",
+      "category": "ai",
+      "source": "fusion-rag",
+      "description": {
+        "zh": "离线向量知识库接入，为任意模块提供文档问答能力",
+        "en": "Offline vector knowledge base; adds document Q&A to any host module"
+      },
+      "doc": "plugins/fusion-rag-ragkb.md"
+    },
+    {
+      "id": "fusion-ecommerce-radar",
+      "name": "fusion-ecommerce-radar",
+      "kind": "plugin",
+      "category": "ecommerce",
+      "source": "fusion-ecommerce",
+      "description": {
+        "zh": "抖音商品趋势分析，热销品类监控与选品建议推送",
+        "en": "Douyin product trend analysis with hot-category monitoring and picks"
+      },
+      "doc": "plugins/fusion-ecommerce-radar.md"
+    },
+    {
+      "id": "fusion-gupiao-panel",
+      "name": "fusion-gupiao-panel",
+      "kind": "plugin",
+      "category": "domain",
+      "source": "fusion-gupiao",
+      "description": {
+        "zh": "A 股实时行情嵌入面板，自选股提醒与指标快照",
+        "en": "Embedded A-share quote panel with watchlist alerts and snapshots"
+      },
+      "doc": "plugins/fusion-gupiao-panel.md"
+    },
+    {
+      "id": "fusion-code-review-skill",
+      "name": "fusion-code-review-skill",
+      "kind": "skill",
+      "category": "dev-tools",
+      "source": "fusion-code",
+      "description": {
+        "zh": "为 Cowork 管线提供 diff 审查节点，输出结构化评审意见",
+        "en": "Diff review node for Cowork pipelines with structured findings"
+      },
+      "doc": "skills/fusion-code-review-skill/SKILL.md"
+    },
+    {
+      "id": "image_gen",
+      "name": "image-gen",
+      "kind": "connector",
+      "category": "image",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "本地图像生成连接器（comfyui / mlx 后端）",
+        "en": "Local image-generation connector (comfyui / mlx backends)"
+      },
+      "doc": "connectors/image_gen.md"
+    },
+    {
+      "id": "video_gen",
+      "name": "video-gen",
+      "kind": "connector",
+      "category": "image",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "视频生成连接器，接本地生成管线",
+        "en": "Video-generation connector for local pipelines"
+      },
+      "doc": "connectors/video_gen.md"
+    },
+    {
+      "id": "mlx_inference",
+      "name": "mlx-inference",
+      "kind": "connector",
+      "category": "infer",
+      "source": "fusion-mlx",
+      "description": {
+        "zh": "fusion-mlx 推理连接器，localhost:11434",
+        "en": "fusion-mlx inference connector on localhost:11434"
+      },
+      "doc": "connectors/mlx_inference.md",
+      "artifacts": [
+        {
+          "os": "any",
+          "arch": "any",
+          "url": "https://github.com/dahai80/fusion-skills/releases/download/registry-artifacts/mlx_inference-v0.12.0-any-any.tar.gz",
+          "sha256": "8c6d9aa909ecca20f0cc429a848dea48a7c6e0889c967e73b27eba75e408c08f",
+          "size": 528
+        }
+      ],
+      "version": "0.12.0"
+    },
+    {
+      "id": "speech",
+      "name": "speech",
+      "kind": "connector",
+      "category": "speech",
+      "source": "fusion-speech",
+      "description": {
+        "zh": "本地语音连接器，接本地 STT/TTS 服务",
+        "en": "Local speech connector bridging local STT/TTS services"
+      },
+      "doc": "connectors/speech.md"
+    },
+    {
+      "id": "web_search",
+      "name": "web-search",
+      "kind": "skill",
+      "category": "web",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "联网检索技能，结果可引用可核查",
+        "en": "Web search skill with citable, verifiable results"
+      },
+      "doc": "skills/web_search/SKILL.md",
+      "source_path": "skills/web_search/",
+      "version": "0.12.0"
+    },
+    {
+      "id": "doc_writer",
+      "name": "doc-writer",
+      "kind": "skill",
+      "category": "office",
+      "source": "fusion-plugins-ecosystem",
+      "description": {
+        "zh": "长文写作技能，成稿入工件库",
+        "en": "Long-form writing skill; drafts land in the artifact store"
+      },
+      "doc": "skills/doc_writer/SKILL.md"
+    },
+    {
+      "id": "fusion-console",
+      "name": "fusion-console",
+      "kind": "app",
+      "category": "app",
+      "source": "fusion-console",
+      "description": {
+        "zh": "本地控制台：高级 LLM（brain）一键管理基础 LLM（work）自动化完成工作任务、可以配置模型与工作方式。",
+        "en": "An advanced LLM (brain) manages base LLMs (work) to automate work tasks, with configurable models and working style."
+      },
+      "doc": "apps/fusion-console.md",
+      "releases": "https://github.com/dahai80/fusion-console/releases",
+      "version": "v0.2.23",
+      "artifacts": [
+        {
+          "os": "darwin",
+          "arch": "amd64",
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-amd64.tar.gz",
+          "sha256": "9178f8ede3a39ceb509c595c1d579fe97057aee8e39c49de8f83e94b22795be4",
+          "size": 34171636
+        },
+        {
+          "os": "darwin",
+          "arch": "arm64",
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-arm64.tar.gz",
+          "sha256": "25037f2ce3bb3344c527996c2b0f282490f40063ed1f08028d2fd9b58ca82ed5",
+          "size": 32208708
+        },
+        {
+          "os": "darwin",
+          "arch": "universal",
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-universal.dmg",
+          "sha256": "610a87ba343d910bbfc6ed45b8f30fdfb5269986ba52e57819774605abcefd49",
+          "size": 73131397
+        },
+        {
+          "os": "linux",
+          "arch": "amd64",
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-amd64.tar.gz",
+          "sha256": "ccc3cdb70c3aedcbdce549340768d63bcb54f372238f637ba4be09cde85c5a10",
+          "size": 33246655
+        },
+        {
+          "os": "linux",
+          "arch": "arm64",
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-arm64.tar.gz",
+          "sha256": "42d5404b3a73c3ae75ba6951a309f7dcd085fa4a6200f0bfa7fa400cb6cdcb0a",
+          "size": 30559136
+        },
+        {
+          "os": "windows",
+          "arch": "amd64",
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-windows-amd64.zip",
+          "sha256": "101f5b032afb12485297c06dbb12966ab521edb31fcd3213e21cefa42726e39c",
+          "size": 33342022
+        }
+      ]
+    },
+    {
+      "id": "fusion-cowork",
+      "name": "fusion-cowork",
+      "kind": "app",
+      "category": "app",
+      "source": "fusion-cowork",
+      "description": {
+        "zh": "DAG 工作流引擎与协作界面：把多步任务编排成可视化流程。",
+        "en": "DAG workflow engine with a collaboration UI: orchestrate multi-step tasks visually."
+      },
+      "doc": "apps/fusion-cowork.md",
+      "releases": "https://github.com/dahai80/fusion-cowork/releases"
+    },
+    {
+      "id": "fusion-agent-studio",
+      "name": "fusion-agent-studio",
+      "kind": "app",
+      "category": "app",
+      "source": "fusion-agent-studio",
+      "description": {
+        "zh": "Agent 工作室：构建、调试和运行本地智能体。",
+        "en": "Agent studio: build, debug and run local agents."
+      },
+      "doc": "apps/fusion-agent-studio.md",
+      "releases": "https://github.com/dahai80/fusion-agent-studio/releases"
+    }
+  ],
+  "schemaVersion": 2
 }
