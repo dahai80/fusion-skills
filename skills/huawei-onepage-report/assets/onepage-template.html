@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>示例：7B 语言模型 GRPO 训练第二轮调优结果</title>
+<style>
+@page{size:A4;margin:0}
+:root{--ink:#1d1d1a;--muted:#666;--soft:#c5c5c5;--panel:#f2f2f2;--red:#c7000b;--redbg:#fbe9ea}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Arial,"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;color:var(--ink);font-size:8.6pt;line-height:1.42;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;min-height:297mm;padding:8mm 14mm 10mm;position:relative;overflow:hidden}
+.foot{position:absolute;left:14mm;right:14mm;bottom:6mm;display:flex;justify-content:space-between;font-size:7.4pt;color:var(--muted);border-top:0.5pt solid var(--soft);padding-top:3pt}
+.top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:0.8pt solid var(--ink);padding-bottom:1.6mm;margin-bottom:1.8mm}
+h1{font-size:17pt;line-height:1.2;margin:0;font-weight:700}
+.tag{font-size:7.8pt;color:var(--muted);white-space:nowrap;text-align:right;line-height:1.4}
+.tag b{color:var(--red)}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:0.3mm 7pt;font-size:7.6pt;color:var(--muted);margin:0 0 2mm;line-height:1.36}
+.meta b{color:var(--ink);font-weight:700;white-space:nowrap}
+h3{font-size:9.6pt;margin:2.3mm 0 1.1mm;font-weight:700;padding-left:7pt;border-left:3pt solid var(--red);line-height:1.3}
+h3 span{font-weight:400;color:var(--muted);font-size:7.8pt;margin-left:6pt}
+p{margin:0 0 1.4mm}
+.thesis{background:var(--red);color:#fff;padding:4.5pt 9pt;font-size:9.3pt;font-weight:700;line-height:1.45;margin:0 0 2mm}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6pt;margin:0}
+.kpi{background:var(--panel);padding:2.6pt 8pt}
+.kpi .l{font-size:7.9pt}
+.kpi .v{font-size:15pt;font-weight:700;color:var(--red);line-height:1.2;margin:0.5pt 0}
+.kpi .v small{font-size:8.8pt;font-weight:400;color:var(--ink);margin-left:2pt}
+.kpi .d{font-size:7.7pt}
+table{border-collapse:collapse;width:100%;font-size:7.9pt;line-height:1.3;margin:0}
+th,td{border-bottom:0.5pt solid var(--muted);padding:1.15pt 4.5pt;text-align:left;vertical-align:top}
+thead th{border-top:0.8pt solid var(--ink);border-bottom:0.8pt solid var(--ink);font-weight:700}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.hl td{background:var(--redbg)}
+tr.grp td{background:var(--panel);font-weight:700;font-size:7.6pt;padding:1.2pt 4.5pt;color:var(--muted)}
+td.k{font-weight:700}
+#t1 td{white-space:nowrap}
+#t1 tr.sep td{border-top:0.8pt solid var(--ink)}
+#t1 td.g{color:var(--muted);font-weight:400;font-size:7.3pt}
+#t1 td.cur,#t1 th.cur{background:var(--redbg);color:var(--red);font-weight:700}
+td.no{font-weight:700;color:var(--red);white-space:nowrap}
+td.eff{border-left:0.5pt solid var(--muted);vertical-align:middle}
+td.eff b{color:var(--red);font-size:9.4pt}
+.cap{font-size:7.2pt;color:var(--muted);margin:0.7mm 0 0;line-height:1.36}
+.cap b{color:var(--ink)}
+.two{display:grid;grid-template-columns:auto 1fr;gap:12pt;align-items:start}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.6mm 11pt;align-items:start}
+.three .w2{grid-column:span 2}
+.lg{font-weight:400;color:var(--muted);font-size:7.8pt;margin-left:6pt}
+.lg i{display:inline-block;width:14pt;height:0;vertical-align:middle;margin:0 3pt 0 8pt}
+.keep{border:0.6pt solid var(--ink);padding:2.4pt 8pt;font-size:7.2pt;margin-top:1.2mm;line-height:1.38}
+.keep b{margin-right:4pt}
+.sum{border:0.8pt solid var(--ink);border-left:4pt solid var(--red);padding:4pt 9pt;font-size:8.1pt;margin-top:2mm;line-height:1.44}
+.sum b.h{color:var(--red);margin-right:3pt}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:Arial,"Microsoft YaHei","PingFang SC",sans-serif;fill:#1d1d1a}
+</style>
+</head>
+<body>
+<section class="page">
+  <div class="top">
+    <h1>示例：7B 语言模型 GRPO 训练第二轮调优结果</h1>
+    <div class="tag">报告日期 2026-01-15<br>状态：<b>速度已确认，准确率待评测</b></div>
+  </div>
+  <div class="meta">
+    <b>范围</b><span>单机 8 卡加速器（4 卡训练 + 4 卡采样，异步），7B 语言模型，batch 64 / 32，学习率 1e-6（本页为虚构示例数据，仅演示版式）</span>
+    <b>对比对象</b><span>上一轮（第 1 轮）与本轮（第 2 轮），均为正式训练 200 步，数据、训练参数、启动脚本相同</span>
+    <b>统计口径</b><span>耗时、吞吐、利用率取第 3 步之后的中位数；单卡训练吞吐 = 每步 token 数 ÷ 4 ÷ 更新耗时，加权吞吐 = 全程 token 数 ÷ 4 ÷ 全程更新耗时</span>
+  </div>
+
+  <div class="thesis">在上一轮基础上再做五项实现层优化，训练参数不变：单卡训练吞吐 3,100 → 7,400 tok/s（2.4 倍），算力利用率 11.2% → 26.8%，整轮 200 步 2.1 → 1.0 小时；训练奖励和一致性指标与上一轮重合。测试集准确率待评测。</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="l">单卡训练吞吐</div><div class="v">7,400<small>tok/s</small></div><div class="d">上一轮 3,100，提高到 2.4 倍</div></div>
+    <div class="kpi"><div class="l">每步更新耗时</div><div class="v">12.6<small>秒</small></div><div class="d">上一轮 30.2 秒，快 2.4 倍</div></div>
+    <div class="kpi"><div class="l">整轮 200 步用时</div><div class="v">1.0<small>小时</small></div><div class="d">上一轮 2.1 小时，少 52%</div></div>
+    <div class="kpi"><div class="l">算力利用率 MFU</div><div class="v">26.8<small>%</small></div><div class="d">上一轮 11.2%，提高到 2.4 倍</div></div>
+  </div>
+
+  <h3>关键数据对比<span>表 1　两轮正式训练，各 200 步</span></h3>
+  <div class="two">
+    <div>
+      <table id="t1">
+        <thead><tr><th style="width:5%"></th><th>指标</th><th class="n">上一轮</th><th class="n cur">本轮</th><th>变化</th></tr></thead>
+        <tbody>
+          <tr><td class="g" rowspan="8">速度</td><td class="k">单卡训练吞吐（中位）</td><td class="n">3,100 tok/s</td><td class="n cur">7,400 tok/s</td><td>2.4 倍</td></tr>
+          <tr><td>　其中 10～90 分位</td><td class="n">2,800～3,350</td><td class="n cur">6,900～7,800</td><td>整体上移</td></tr>
+          <tr><td class="k">单卡训练吞吐（按 token 加权）</td><td class="n">3,050 tok/s</td><td class="n cur">7,150 tok/s</td><td>2.3 倍</td></tr>
+          <tr><td class="k">每步更新耗时</td><td class="n">30.2 秒</td><td class="n cur">12.6 秒</td><td>快 2.4 倍</td></tr>
+          <tr><td class="k">算力利用率 MFU</td><td class="n">11.2%</td><td class="n cur">26.8%</td><td>2.4 倍</td></tr>
+          <tr><td class="k">每步总耗时</td><td class="n">38.0 秒</td><td class="n cur">18.4 秒</td><td>快 2.1 倍</td></tr>
+          <tr><td class="k">整轮 200 步用时</td><td class="n">2.11 小时</td><td class="n cur">1.02 小时</td><td>少 1.09 小时</td></tr>
+          <tr><td class="k">8 卡整步吞吐（全程平均）</td><td class="n">9,800 tok/s</td><td class="n cur">16,200 tok/s</td><td>1.7 倍</td></tr>
+          <tr class="sep"><td class="g" rowspan="4">一致性</td><td class="k">末 20 步平均训练奖励</td><td class="n">0.842</td><td class="n cur">0.846</td><td>持平</td></tr>
+          <tr><td class="k">训练与采样对数概率差（中位）</td><td class="n">0.0050</td><td class="n cur">0.0047</td><td>持平</td></tr>
+          <tr><td class="k">KL / 被裁剪 token 比例（中位）</td><td class="n">0.0020 / 0.40%</td><td class="n cur">0.0019 / 0.38%</td><td>持平</td></tr>
+          <tr><td class="k">梯度范数（中位 / 最大）</td><td class="n">1.8 / 40.1</td><td class="n cur">1.7 / 31.5</td><td>同量级</td></tr>
+          <tr class="sep"><td class="g">资源</td><td class="k">单卡显存峰值（已分配 / 预留）</td><td class="n">38.0 / 44.0 GB</td><td class="n cur">43.0 / 56.0 GB</td><td>+5.0 / +12.0 GB</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div id="c1"></div>
+      <p class="cap"><b>图 1　训练平均奖励，每 10 步取平均。</b>两轮曲线全程重合，末段都在 0.83～0.86，本轮的优化没有改变训练走向。</p>
+    </div>
+  </div>
+
+  <h3>措施与效果<span>表 2　五项均默认生效，各有独立开关可单独关闭</span></h3>
+  <table>
+    <thead><tr><th style="width:3.2%"></th><th style="width:21.5%">措施</th><th>原理</th><th style="width:22%">实测效果（单卡训练吞吐）</th></tr></thead>
+    <tbody>
+      <tr><td class="no">①</td><td class="k">融合算子替代小算子</td><td>把逐块下发的小算子换成设备端融合内核，减少下发开销；数值按原精度计算，梯度不变。</td><td class="eff" rowspan="2"><b>3,100 → 约 5,200</b>　1.7 倍<br>30 步实测；显存 38 → 34 GB</td></tr>
+      <tr><td class="no">②</td><td class="k">输出层只计算回答位置</td><td>损失只需要回答 token 的概率，提示位置不再做词表投影，回答位置的数值不变。</td></tr>
+      <tr><td class="no">③</td><td class="k">重复输入去重</td><td>同一提示的多条采样共享相同输入，只编码一次、按位置复用，特征不变。</td><td class="eff" rowspan="3" style="white-space:nowrap"><b>约 5,200 → 7,400</b>　1.4 倍<br>正式训练 200 步，三项合并测量<br>显存 34 → 43 GB</td></tr>
+      <tr><td class="no">④</td><td class="k">均衡分卡</td><td>按 token 量把样本均衡分到各训练卡。通用的负载均衡，只调顺序，不改变参与训练的样本。</td></tr>
+      <tr><td class="no">⑤</td><td class="k">按显存预算放开重计算</td><td>重计算用重复一次前向换显存；在显存预算内对部分层保留中间结果，梯度数值不变。</td></tr>
+    </tbody>
+  </table>
+  <div class="keep"><b>保持不变</b>batch、学习率、数据、奖励、4+4 卡、200 步、启动脚本。<b style="margin-left:6pt">试过未采用</b>前缀缓存、长度重排、全关重计算。</div>
+
+  <h3>细项分析<span class="lg">逐步曲线，横轴为训练步 1～200<i style="border-top:1.2pt solid #8c8c8c"></i>上一轮<i style="border-top:1.8pt solid #c7000b"></i>本轮</span></h3>
+  <div class="three" style="grid-template-columns:1fr 1fr">
+    <div><div id="d1"></div><p class="cap"><b>图 2　每步耗时（秒）。</b>中位 38.0 → 18.4；本轮前 20 步偏高是等待采样，超过 100 秒的点截断显示。</p></div>
+    <div><div id="d2"></div><p class="cap"><b>图 3　训练与采样的对数概率差。</b>应接近 0。两轮同一水平，中位 0.0050 和 0.0047。</p></div>
+  </div>
+  <div style="margin-top:1.4mm"><div id="c3"></div><p class="cap"><b>图 4　整轮用时构成（小时）。</b>更新从 1.68 降到 0.70 小时；权重同步不变，等待采样增加，是整步时间的下一个短板。</p></div>
+
+  <div class="sum"><b class="h">结论</b>速度提升已由完整的正式训练确认，全程无报错、无显存溢出；奖励、对数概率差、KL 与上一轮一致，但不能代替测试集准确率。<br><b class="h">下一步</b>(1) 用本轮末步检查点跑测试集评测；(2) 上调重计算的显存预算；(3) 权重同步和等待采样是后续优化的重点。</div>
+
+  <div class="foot"><span>示例：7B 语言模型 GRPO 训练第二轮调优结果 · 2026-01-15</span><span>数据来源：虚构示例数据，仅演示版式</span></div>
+</section>
+<script>
+(function () {
+  const RED = '#c7000b', G1 = '#4d4d4d', G2 = '#8c8c8c', G3 = '#c5c5c5', MUT = 'style="fill:#666"';
+
+  // 图 1 奖励曲线
+  (function () {
+    const el = document.getElementById('c1'), W = 270, H = 262, L = 30, R = 12, T = 30, B = 32;
+    const A = [0.63, 0.654, 0.704, 0.711, 0.742, 0.771, 0.78, 0.782, 0.802, 0.799, 0.817, 0.826, 0.825, 0.831, 0.821, 0.824, 0.845, 0.848, 0.831, 0.842, 0.832];
+    const Bv = [0.624, 0.652, 0.711, 0.718, 0.752, 0.779, 0.788, 0.776, 0.804, 0.796, 0.814, 0.817, 0.815, 0.827, 0.829, 0.818, 0.854, 0.842, 0.827, 0.843, 0.824];
+    const lo = 0.6, hi = 0.92, n = 21;
+    const x = i => L + (W - L - R) * i / (n - 1), y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+    let g = '';
+    for (const t of [0.6, 0.7, 0.8, 0.9]) g += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="${G3}" stroke-width="0.5"/><text x="${L - 5}" y="${y(t) + 3.3}" font-size="10.5" text-anchor="end" ${MUT}>${t.toFixed(1)}</text>`;
+    for (const [i, t] of [[0, '1'], [5, '50'], [10, '100'], [15, '150'], [20, '200']]) g += `<text x="${x(i)}" y="${H - 17}" font-size="10.5" text-anchor="middle" ${MUT}>${t}</text>`;
+    g += `<text x="${(L + W - R) / 2}" y="${H - 3}" font-size="10.5" text-anchor="middle" ${MUT}>训练步</text>`;
+    g += `<line x1="${L}" x2="${L + 18}" y1="12" y2="12" stroke="${G2}" stroke-width="1.6"/><text x="${L + 23}" y="15.2" font-size="11">上一轮</text>`;
+    g += `<line x1="${L + 108}" x2="${L + 126}" y1="12" y2="12" stroke="${RED}" stroke-width="2.2"/><text x="${L + 131}" y="15.2" font-size="11" font-weight="700">本轮</text>`;
+    for (const s of [{ v: A, c: G2, w: 1.6 }, { v: Bv, c: RED, w: 2.2 }]) {
+      g += `<path d="${s.v.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${s.c}" stroke-width="${s.w}" stroke-linejoin="round"/>`;
+      g += `<circle cx="${x(n - 1)}" cy="${y(s.v[n - 1])}" r="2.8" fill="${s.c}" stroke="#fff" stroke-width="1.1"/>`;
+    }
+    g += `<text x="${x(n - 1)}" y="${y(0.85) - 9}" font-size="11" font-weight="700" text-anchor="end">末段均约 0.84</text>`;
+    g += `<text x="${x(0) + 4}" y="${y(0.62) + 13}" font-size="10.5" ${MUT}>起点 0.62</text>`;
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+  })();
+
+  // 图 4 整轮用时构成
+  (function () {
+    const el = document.getElementById('c3'), W = 760, H = 78, L = 52, BW = 400, T = 18;
+    const segs = [['更新', RED, '#fff'], ['权重同步', G1, '#fff'], ['等待采样', G2, '#fff'], ['其他', G3, '#1d1d1a']];
+    const rows = [
+      { n: '上一轮', v: [1.68, 0.30, 0.09, 0.04], tot: '2.11' },
+      { n: '本轮', v: [0.70, 0.17, 0.12, 0.03], tot: '1.02' }
+    ];
+    const hi = 2.9, x = v => L + BW * v / hi, bh = 17;
+    let g = '', lx = L;
+    segs.forEach(([n, c]) => { g += `<rect x="${lx}" y="3" width="8" height="8" fill="${c}"/><text x="${lx + 11}" y="10.5" font-size="9">${n}</text>`; lx += 11 + n.length * 9.4 + 10; });
+    g += `<text x="${L + BW + 52}" y="10.5" font-size="9" ${MUT}>占整轮用时的比例</text>`;
+    rows.forEach((r, i) => {
+      const y0 = T + i * (bh + 5), tot = r.v.reduce((a, b) => a + b, 0);
+      g += `<text x="${L - 6}" y="${y0 + bh / 2 + 3.3}" font-size="9.2" font-weight="700" text-anchor="end">${r.n.split(' ')[0]}</text>`;
+      let acc = 0;
+      r.v.forEach((v, k) => {
+        const x0 = x(acc), w = x(acc + v) - x0;
+        g += `<rect x="${x0}" y="${y0}" width="${Math.max(w - 1.2, 0.6)}" height="${bh}" fill="${segs[k][1]}"/>`;
+        if (w > 22) g += `<text x="${x0 + w / 2 - 0.6}" y="${y0 + bh / 2 + 3.4}" font-size="9.5" font-weight="700" text-anchor="middle" style="fill:${segs[k][2]}">${v.toFixed(2)}</text>`;
+        acc += v;
+      });
+      g += `<text x="${x(acc) + 4}" y="${y0 + bh / 2 + 3.4}" font-size="10" font-weight="700">${r.tot}</text>`;
+      g += `<text x="${L + BW + 52}" y="${y0 + bh / 2 + 3.3}" font-size="9.2">更新 <tspan font-weight="700">${Math.round(r.v[0] / tot * 100)}%</tspan>　同步 <tspan font-weight="700">${Math.round(r.v[1] / tot * 100)}%</tspan>　等待 <tspan font-weight="700">${Math.round(r.v[2] / tot * 100)}%</tspan>　其他 ${Math.round(r.v[3] / tot * 100)}%</text>`;
+    });
+    const ya = T + 2 * (bh + 5) + 1;
+    g += `<line x1="${L}" x2="${x(2.11)}" y1="${ya}" y2="${ya}" stroke="#1d1d1a" stroke-width="0.6"/>`;
+    for (const t of [0, 1, 2]) g += `<line x1="${x(t)}" x2="${x(t)}" y1="${ya}" y2="${ya + 3}" stroke="#1d1d1a" stroke-width="0.6"/><text x="${x(t)}" y="${ya + 12}" font-size="8.6" text-anchor="middle" ${MUT}>${t}</text>`;
+    g += `<text x="${x(2.11) + 4}" y="${ya + 12}" font-size="8.6" ${MUT}>小时</text>`;
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+  })();
+
+  // 图 2～3 逐步曲线
+  const SER = {"A":{"st":[66.0,64.6,56.3,58.8,71.1,33.3,39.9,76.9,44.7,78.6,37.3,38.0,39.9,33.8,42.6,42.5,34.7,34.7,32.7,36.7,41.9,35.3,41.3,35.8,39.8,35.2,40.9,36.6,32.9,40.5,37.6,40.4,37.9,39.0,32.7,34.4,42.1,33.6,44.1,41.7,39.8,36.2,43.6,40.4,33.8,35.3,41.2,35.9,38.1,35.0,44.5,43.5,39.3,43.7,36.1,35.1,33.0,41.6,33.5,35.6,41.8,40.0,38.5,41.1,32.3,34.5,42.5,40.0,32.6,39.9,36.4,44.0,43.0,34.9,37.9,32.7,38.1,39.7,33.7,37.1,36.7,41.3,37.1,40.7,36.9,34.1,35.0,42.7,34.0,43.1,43.1,42.3,42.0,38.3,35.0,33.4,44.8,42.9,42.5,43.7,38.8,43.8,36.6,40.7,42.7,40.3,36.6,36.8,36.6,40.8,44.3,35.3,41.3,42.7,34.3,40.0,41.6,34.5,44.2,35.7,35.3,41.2,41.8,35.5,40.0,41.6,38.7,43.0,43.9,39.8,38.3,41.4,34.6,44.7,39.0,39.5,35.7,38.1,38.1,34.4,36.7,39.6,36.3,43.3,44.7,37.2,41.2,32.5,38.7,38.5,32.5,42.5,42.2,35.0,43.1,41.9,43.2,35.5,39.4,33.9,36.3,37.0,44.2,39.7,41.9,40.0,37.5,38.7,41.0,42.7,33.1,39.8,34.6,42.1,40.3,34.3,39.2,42.1,37.3,39.4,40.5,37.8,40.1,41.6,87.7,34.0,35.9,41.5,41.1,43.4,33.7,36.9,33.3,43.1,39.5,44.0,44.0,36.3,93.7,37.5],"lp":[0.0061,0.0051,0.0072,0.0059,0.0048,0.0063,0.0037,0.0045,0.0045,0.006,0.0031,0.0048,0.0056,0.0034,0.004,0.0037,0.0061,0.005,0.0068,0.004,0.0054,0.0053,0.0063,0.0046,0.0044,0.0042,0.005,0.0034,0.0051,0.0036,0.0062,0.0039,0.0056,0.0062,0.0052,0.0054,0.0052,0.0051,0.0061,0.0054,0.0045,0.005,0.0062,0.005,0.007,0.0049,0.0059,0.0061,0.0043,0.0052,0.0047,0.0056,0.006,0.005,0.0058,0.0035,0.0055,0.0059,0.0041,0.0053,0.0031,0.0054,0.0052,0.0051,0.006,0.0059,0.0051,0.0059,0.0052,0.0053,0.005,0.0055,0.0045,0.0056,0.0041,0.004,0.0042,0.0057,0.0036,0.0061,0.0056,0.0061,0.0047,0.004,0.0051,0.0056,0.0033,0.0055,0.0051,0.0036,0.0041,0.0045,0.0044,0.0044,0.0054,0.0053,0.0041,0.0056,0.0047,0.0035,0.0047,0.0058,0.0052,0.0045,0.0051,0.0057,0.0059,0.0041,0.0039,0.005,0.0038,0.0037,0.0024,0.0041,0.0041,0.0038,0.0048,0.0054,0.0044,0.0061,0.0044,0.0049,0.0048,0.0047,0.0063,0.0035,0.0037,0.0043,0.0046,0.0058,0.0048,0.0032,0.0042,0.0045,0.004,0.0049,0.005,0.0057,0.0049,0.0043,0.0047,0.0042,0.0055,0.0047,0.006,0.0058,0.0065,0.0052,0.0033,0.0048,0.0054,0.0033,0.0058,0.0047,0.0043,0.0051,0.0047,0.0073,0.0058,0.0044,0.0038,0.0038,0.0049,0.0056,0.0043,0.0053,0.0068,0.0041,0.006,0.0028,0.0041,0.0044,0.0037,0.0052,0.0047,0.0048,0.0047,0.0037,0.0065,0.0043,0.0048,0.005,0.0038,0.0047,0.0049,0.0054,0.0052,0.0054,0.0048,0.0049,0.0047,0.0047,0.0057,0.0039,0.0051,0.0057,0.0058,0.0054,0.0053,0.0048]},"B":{"st":[27.5,28.9,25.5,33.7,66.0,32.0,28.6,30.9,30.5,25.6,32.3,33.3,27.8,31.7,30.7,33.4,29.4,34.3,27.7,33.8,19.7,20.0,21.5,19.8,15.9,17.0,17.0,16.5,16.7,16.3,20.1,21.4,20.0,16.1,16.1,20.0,16.8,17.1,18.2,16.4,18.7,16.3,17.2,19.9,19.8,18.1,21.6,17.6,20.9,16.9,18.4,19.3,18.5,21.2,18.1,21.5,16.7,17.4,19.3,18.5,20.2,17.6,19.5,19.9,19.3,16.7,16.9,16.2,21.6,15.9,16.1,19.3,20.3,17.8,21.0,18.7,17.6,18.7,20.1,21.3,21.3,16.8,21.3,17.6,17.8,18.7,20.2,19.4,21.1,20.2,20.4,20.8,20.8,21.1,17.2,16.4,20.3,20.6,19.9,21.5,19.8,19.0,16.1,20.4,18.7,18.8,15.9,19.6,17.9,18.5,73.1,15.8,16.4,21.1,17.2,17.9,19.9,19.7,21.7,19.6,21.3,21.2,18.7,20.0,83.6,21.4,18.2,20.7,16.0,77.7,16.6,19.7,17.0,17.9,19.3,21.5,17.5,20.3,16.6,16.3,16.0,18.7,18.8,19.8,16.0,18.3,19.1,17.7,16.3,19.2,21.4,20.5,17.4,20.5,21.5,15.7,17.9,17.4,21.2,16.5,19.9,17.7,16.8,18.8,19.6,17.4,15.7,18.1,20.3,19.6,20.6,21.4,16.1,18.4,17.4,19.6,19.3,21.4,19.3,18.1,19.9,19.4,15.8,20.9,16.3,21.2,20.9,17.1,18.1,21.6,16.9,18.5,20.0,19.6,21.0,20.8,19.9,20.1,16.1,18.5],"lp":[0.0055,0.0046,0.006,0.0049,0.0046,0.0042,0.0036,0.0059,0.0043,0.0041,0.0054,0.006,0.004,0.0037,0.0032,0.0044,0.0037,0.0045,0.0052,0.0045,0.0041,0.0031,0.0054,0.0033,0.0062,0.0033,0.0036,0.0044,0.0052,0.0052,0.0052,0.0047,0.0058,0.006,0.0039,0.0057,0.0061,0.0044,0.0039,0.0051,0.0049,0.0041,0.0054,0.0046,0.0033,0.0051,0.0043,0.0058,0.0045,0.0062,0.0036,0.0053,0.0048,0.0055,0.0049,0.0051,0.0052,0.004,0.006,0.005,0.0041,0.005,0.0036,0.0052,0.0054,0.005,0.0048,0.0045,0.0039,0.0035,0.0065,0.0045,0.0035,0.0044,0.0048,0.0049,0.0042,0.0062,0.0048,0.0057,0.0046,0.0051,0.006,0.0044,0.0038,0.0044,0.0033,0.0044,0.0046,0.0048,0.0051,0.0041,0.0038,0.0045,0.0057,0.0057,0.0062,0.0036,0.005,0.0039,0.0053,0.004,0.0041,0.0036,0.005,0.0056,0.0046,0.0056,0.0044,0.0045,0.0034,0.0044,0.0044,0.0052,0.0053,0.005,0.0056,0.0029,0.0044,0.0039,0.0034,0.0042,0.0051,0.0038,0.005,0.004,0.0039,0.0039,0.0066,0.0052,0.005,0.0052,0.0042,0.0066,0.0057,0.0054,0.0033,0.0059,0.0049,0.0043,0.0036,0.0056,0.0039,0.0062,0.0038,0.0056,0.0033,0.0074,0.0047,0.0029,0.0035,0.0039,0.0056,0.0045,0.006,0.006,0.0051,0.0053,0.0052,0.0052,0.0042,0.0051,0.005,0.0037,0.0036,0.0035,0.0049,0.0052,0.0041,0.0067,0.005,0.0056,0.0041,0.0038,0.0038,0.0063,0.003,0.0047,0.0054,0.0032,0.0051,0.0041,0.0049,0.0054,0.0048,0.0042,0.0029,0.0036,0.0054,0.0041,0.0056,0.0049,0.0057,0.0059,0.0034,0.003,0.0042,0.005,0.0037,0.006]}};
+  function series(id, key, o) {
+    const el = document.getElementById(id), W = 380, H = 112, L = 28, R = 42, T = 6, B = 16;
+    const n = 200, x = i => L + (W - L - R) * i / (n - 1), y = v => T + (H - T - B) * (1 - (Math.min(v, o.hi) - o.lo) / (o.hi - o.lo));
+    let g = '';
+    for (const t of o.ticks) g += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="${t === o.lo ? '#1d1d1a' : G3}" stroke-width="${t === o.lo ? 0.7 : 0.5}"/><text x="${L - 4}" y="${y(t) + 3.2}" font-size="8.6" text-anchor="end" ${MUT}>${o.fmt(t)}</text>`;
+    for (const t of [1, 50, 100, 150, 200]) g += `<text x="${x(t - 1)}" y="${H - 4}" font-size="8.6" text-anchor="middle" ${MUT}>${t}</text>`;
+    for (const [k, c, w] of [['A', G2, 0.8], ['B', RED, 1.1]])
+      g += `<path d="${SER[k][key].map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round"/>`;
+    let ya = y(o.ma), yb = y(o.mb);
+    if (Math.abs(ya - yb) < 11) { const m = (ya + yb) / 2, up = ya < yb; ya = m + (up ? -5.5 : 5.5); yb = m + (up ? 5.5 : -5.5); }
+    g += `<text x="${W - R + 4}" y="${ya + 3.2}" font-size="9.2" style="fill:#666">${o.la}</text>`;
+    g += `<text x="${W - R + 4}" y="${yb + 3.2}" font-size="9.2" font-weight="700" style="fill:${RED}">${o.lb}</text>`;
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+  }
+  series('d1', 'st', { lo: 0, hi: 100, ticks: [0, 25, 50, 75, 100], fmt: t => t, ma: 38.0, mb: 18.4, la: '38.0 秒', lb: '18.4 秒' });
+  series('d2', 'lp', { lo: 0, hi: 0.015, ticks: [0, 0.005, 0.010, 0.015], fmt: t => t.toFixed(3), ma: 0.0050, mb: 0.0047, la: '0.0050', lb: '0.0047' });
+})();
+</script>
+</body>
+</html>

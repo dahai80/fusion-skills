@@ -13,7 +13,7 @@ downloads link to each source repo's GitHub Releases page.
 - `apps/` — host apps (console, cowork, agent-studio): marketplace consumers, not marketplace goods
 - `plugins/` — host-module plugins (file access, document tools, panels)
 - `connectors/` — local-service connectors (inference, image/video, speech)
-- `skills/` — agent skills (web search, long-form writing, code review)
+- `skills/` — agent skills (web search, long-form writing, code review, Ascend inference optimization, UI/UX design, one-page reports)
 - `registry.json` — the catalog mapping consumed by fusion surfaces
 
 ## Install

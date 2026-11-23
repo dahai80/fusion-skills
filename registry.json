@@ -207,6 +207,33 @@
       "version": "1.0.0"
     },
     {
+      "id": "ui_ux_pro_max",
+      "name": "ui-ux-pro-max",
+      "kind": "skill",
+      "category": "dev-tools",
+      "source": "fusion-skills",
+      "description": {
+        "zh": "UI/UX 设计智能：样式、配色、字体搭配、交互与无障碍规则可检索，附设计系统生成与预览脚本（改编自 MIT 开源项目）",
+        "en": "UI/UX design intelligence: searchable styles, palettes, font pairings, interaction and accessibility rules, plus design-system generation and preview scripts (adapted from an MIT-licensed upstream)"
+      },
+      "doc": "skills/ui-ux-pro-max/SKILL.md",
+      "source_path": "skills/ui-ux-pro-max/",
+      "version": "1.0.0"
+    },
+    {
+      "id": "huawei_onepage_report",
+      "name": "huawei-onepage-report",
+      "kind": "skill",
+      "category": "office",
+      "description": {
+        "zh": "华为红灰风格单页结果报告：HTML 底稿 → 1～2 倍 A4 单页 PDF + PNG，含结论式标题、指标卡、对比表与内联 SVG 图；附多页技术讲解模板",
+        "en": "Huawei-style red/grey one-page result report: HTML template rendered to a single 1-2x A4 PDF + PNG with a conclusion headline, KPI cards, comparison tables and inline SVG charts; includes a multi-page technical explainer template"
+      },
+      "doc": "skills/huawei-onepage-report/SKILL.md",
+      "source_path": "skills/huawei-onepage-report/",
+      "version": "1.0.0"
+    },
+    {
       "id": "fusion-console",
       "name": "fusion-console",
       "kind": "app",
