@@ -245,49 +245,49 @@
       },
       "doc": "apps/fusion-console.md",
       "releases": "https://github.com/dahai80/fusion-console/releases",
-      "version": "v0.2.23",
+      "version": "v0.2.26",
       "artifacts": [
         {
           "os": "darwin",
           "arch": "amd64",
-          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-amd64.tar.gz",
-          "sha256": "9178f8ede3a39ceb509c595c1d579fe97057aee8e39c49de8f83e94b22795be4",
-          "size": 34171636
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.26/fusion-console-v0.2.26-darwin-amd64.tar.gz",
+          "sha256": "24355b4872ba306fc39178333316df3339bc90242bf2a13f7c6671d182353ff9",
+          "size": 34194249
         },
         {
           "os": "darwin",
           "arch": "arm64",
-          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-arm64.tar.gz",
-          "sha256": "25037f2ce3bb3344c527996c2b0f282490f40063ed1f08028d2fd9b58ca82ed5",
-          "size": 32208708
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.26/fusion-console-v0.2.26-darwin-arm64.tar.gz",
+          "sha256": "2615ddf3ec305d2b8993fd9260573f7ee756f0bc0294faba6b9c781e58d7f73d",
+          "size": 32228065
         },
         {
           "os": "darwin",
           "arch": "universal",
-          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-darwin-universal.dmg",
-          "sha256": "610a87ba343d910bbfc6ed45b8f30fdfb5269986ba52e57819774605abcefd49",
-          "size": 73131397
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.26/fusion-console-v0.2.26-darwin-universal.dmg",
+          "sha256": "0c107a36d05c19090c083be46c209451ba67589854ced88bb74d7e27dc941840",
+          "size": 72180261
         },
         {
           "os": "linux",
           "arch": "amd64",
-          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-amd64.tar.gz",
-          "sha256": "ccc3cdb70c3aedcbdce549340768d63bcb54f372238f637ba4be09cde85c5a10",
-          "size": 33246655
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.26/fusion-console-v0.2.26-linux-amd64.tar.gz",
+          "sha256": "51b0c637de6a87f282753e0c6c2d36b0f9195c72f77173b0f048dde1a2908c15",
+          "size": 33268033
         },
         {
           "os": "linux",
           "arch": "arm64",
-          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-linux-arm64.tar.gz",
-          "sha256": "42d5404b3a73c3ae75ba6951a309f7dcd085fa4a6200f0bfa7fa400cb6cdcb0a",
-          "size": 30559136
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.26/fusion-console-v0.2.26-linux-arm64.tar.gz",
+          "sha256": "6a455ed6fb1348e1993ec5cbed33d436b08c1573a1702ed9ae784edbfcc2ee94",
+          "size": 30578726
         },
         {
           "os": "windows",
           "arch": "amd64",
-          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.23/fusion-console-v0.2.23-windows-amd64.zip",
-          "sha256": "101f5b032afb12485297c06dbb12966ab521edb31fcd3213e21cefa42726e39c",
-          "size": 33342022
+          "url": "https://github.com/dahai80/fusion-console/releases/download/v0.2.26/fusion-console-v0.2.26-windows-amd64.zip",
+          "sha256": "d75dfe3860a193e2c3606343a8d86c731847388f58863b0df554aae52238764d",
+          "size": 33364211
         }
       ]
     },
