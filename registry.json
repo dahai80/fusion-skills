@@ -234,6 +234,20 @@
       "version": "1.0.0"
     },
     {
+      "id": "weekly_work_report",
+      "name": "weekly-work-report",
+      "kind": "skill",
+      "category": "office",
+      "source": "fusion-skills",
+      "description": {
+        "zh": "对照上期目标，把有依据的工作记录整理成周报草稿，疑点另列供本人核实。",
+        "en": "Draft a weekly work report from dated records and prior goals, with unresolved questions kept separate for review."
+      },
+      "doc": "skills/weekly-work-report/SKILL.md",
+      "source_path": "skills/weekly-work-report/",
+      "version": "1.0.0"
+    },
+    {
       "id": "fusion-console",
       "name": "fusion-console",
       "kind": "app",
