@@ -14,7 +14,7 @@
 
 | 类型 | 载荷位置 | registry 字段 |
 |------|----------|----------------|
-| skill（纯文本） | 本仓 `skills/<id>/`（`SKILL.md` + 文件） | `path`（仓内路径），可选打包 `artifacts` |
+| skill（纯文本） | 本仓 `skills/<id>/`（`SKILL.md` + 文件） | `source_path`（仓内路径），可选打包 `artifacts` |
 | plugin | 源仓库 GitHub Releases | `artifacts: [{os, arch, url, sha256, size}]` |
 | connector | 源仓库 GitHub Releases | `artifacts`（同上） |
 | app（宿主） | 各自仓库 GitHub Releases | `releases` 页链接，可选 pin 的 `artifacts` |
@@ -33,7 +33,7 @@
 
 每次 push 到 `main` 触碰 `skills/` 后，CI 会把变更的 skill 打成
 `skill-<id>-<短sha>.tar.gz` 附到本仓 `skills-auto` Release，并发布 SHA256SUMS。
-仓内 `path` 仍是主安装锚（消费端 pin commit SHA）；打包资产是便利镜像，
+仓内 `source_path` 仍是主安装锚（消费端 pin commit SHA）；打包资产是便利镜像，
 sha256 随包发布 — 偏好压缩包的宿主可直接从 Release 解析，无需任何人工步骤。
 
 ## registry PR 自查清单
@@ -41,6 +41,7 @@ sha256 随包发布 — 偏好压缩包的宿主可直接从 Release 解析，�
 - [ ] `id` 唯一，`kind` ∈ plugin | connector | skill | app
 - [ ] description 中英双语齐全
 - [ ] `doc` 指向的文档真实存在
+- [ ] 仓内 skill：`source_path` 指向技能目录（如 `skills/<id>/`），且目录内有 `SKILL.md`
 - [ ] 每个 `artifacts[]` 含 `os`、`arch`、`url`、`sha256`（64 位十六进制）、`size`
 - [ ] 二进制 sha256 按上传的原始文件计算
 - [ ] 安装文档描述基于资产的流程，而不只是 shell

@@ -21,7 +21,7 @@ Binaries never live in this repo — git is for text, GitHub Releases are for pa
 
 - `skills/` — agent skills, one directory per skill with `SKILL.md` (e.g. `web_search/`, `doc_writer/`, `fusion-code-review-skill/`)
 - `plugins/`, `connectors/`, `apps/` — markdown docs describing entries whose payloads live in their source repos' GitHub Releases
-- `registry.json` — the catalog: `schemaVersion: 2`, `entries[]` with `id`, `name`, `kind` (`plugin | connector | skill | app`), `category`, `source`, bilingual `description` (`zh` + `en`), `doc` path, optional `artifacts`
+- `registry.json` — the catalog: `schemaVersion: 2`, `entries[]` with `id`, `name`, `kind` (`plugin | connector | skill | app`), `category`, `source`, bilingual `description` (`zh` + `en`), `doc` path, optional `source_path` (in-repo skill dir) and `artifacts`
 - `scripts/validate_registry.py` — registry validator
 - `.github/workflows/` — CI
 
@@ -34,12 +34,12 @@ python3 scripts/validate_registry.py                 # offline structural checks
 python3 scripts/validate_registry.py --check-urls    # also verifies artifact URLs (what CI runs)
 ```
 
-CI (`.github/workflows/validate-registry.yml`) fails on: duplicate `id`, unknown `kind`, missing doc file at declared `doc` path, missing `zh`/`en` description, `artifacts[]` entries lacking `os`/`arch`/`url`/`sha256` (64 hex)/`size`.
+CI (`.github/workflows/validate-registry.yml`) fails on: duplicate `id`, unknown `kind`, missing doc file at declared `doc` path, missing `zh`/`en` description, a `source_path` that is not an in-repo directory containing `SKILL.md`, `artifacts[]` entries lacking `os`/`arch`/`url`/`sha256` (64 hex)/`size`.
 
 ## CI Workflows
 
 - `validate-registry.yml` — runs the validator with `--check-urls` on PRs
-- `package-skills.yml` — on push to `main` touching `skills/`, packages each changed skill into `skill-<id>-<shortsha>.tar.gz`, attaches to the `skills-auto` release, publishes `SHA256SUMS`. The in-repo `path` stays the primary install anchor; the archive is a convenience mirror.
+- `package-skills.yml` — on push to `main` touching `skills/`, packages each changed skill into `skill-<id>-<shortsha>.tar.gz`, attaches to the `skills-auto` release, publishes `SHA256SUMS`. The in-repo `source_path` stays the primary install anchor; the archive is a convenience mirror.
 
 ## Adding an Entry
 
@@ -47,6 +47,7 @@ Direct PR is the only live path (automated pipeline from fusion-plugins-ecosyste
 
 Checklist (enforced by CI, so run the validator locally first):
 - `id` unique; `kind` valid; doc file exists at declared `doc` path
+- in-repo skill: `source_path` points at the skill directory and it contains `SKILL.md`
 - description present in both `zh` and `en`
 - every `artifacts[]` entry has `os`, `arch`, `url`, `sha256` (64 hex lowercase), `size`
 - binary sha256 computed over the exact uploaded release file

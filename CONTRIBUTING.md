@@ -16,7 +16,7 @@ integrity anchor:
 
 | Kind | Payload location | Registry field |
 |------|------------------|----------------|
-| skill (text) | `skills/<id>/` in this repo (`SKILL.md` + files) | `path` (in-repo), optional packaged `artifacts` |
+| skill (text) | `skills/<id>/` in this repo (`SKILL.md` + files) | `source_path` (in-repo), optional packaged `artifacts` |
 | plugin | source repo GitHub Releases | `artifacts: [{os, arch, url, sha256, size}]` |
 | connector | source repo GitHub Releases | `artifacts` (same shape) |
 | app (host) | own repo GitHub Releases | `releases` page URL, optional pinned `artifacts` |
@@ -39,7 +39,7 @@ packages.
 
 On every push to `main` that touches `skills/`, CI packages each changed
 skill into `skill-<id>-<shortsha>.tar.gz`, attaches it to this repo's
-`skills-auto` release, and publishes a SHA256SUMS file. The in-repo `path`
+`skills-auto` release, and publishes a SHA256SUMS file. The in-repo `source_path`
 stays the primary install anchor (consumers pin a commit SHA); the packaged
 artifact is a convenience mirror with its sha256 published alongside — hosts
 that prefer archives resolve it from the release without any manual step.
@@ -49,6 +49,7 @@ that prefer archives resolve it from the release without any manual step.
 - [ ] `id` unique, `kind` one of `plugin | connector | skill | app`
 - [ ] description present in both zh and en
 - [ ] doc file exists at the declared `doc` path
+- [ ] in-repo skill: `source_path` is the skill directory (e.g. `skills/<id>/`) and contains `SKILL.md`
 - [ ] every `artifacts[]` entry has `os`, `arch`, `url`, `sha256` (64 hex), `size`
 - [ ] binary sha256 computed over the exact uploaded file
 - [ ] install doc describes the artifact flow, not just the shell
