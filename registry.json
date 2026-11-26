@@ -330,6 +330,20 @@
       },
       "doc": "apps/fusion-agent-studio.md",
       "releases": "https://github.com/dahai80/fusion-agent-studio/releases"
+    },
+    {
+      "id": "rl_tuning",
+      "name": "rl-tuning",
+      "kind": "skill",
+      "category": "dev-tools",
+      "source": "fusion-skills",
+      "description": {
+        "zh": "为 GRPO/PPO 大模型训练选择、设计和验收端到端吞吐调优实验，覆盖训练语义、显存、实验编号和决策规则回放。",
+        "en": "Plan and evaluate end-to-end throughput experiments for GRPO and PPO training, with checks for training semantics and memory, stable experiment IDs, and replay of tuning decisions."
+      },
+      "doc": "skills/rl-tuning/SKILL.md",
+      "source_path": "skills/rl-tuning/",
+      "version": "1.0.0"
     }
   ],
   "schemaVersion": 2
