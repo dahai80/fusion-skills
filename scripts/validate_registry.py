@@ -3,6 +3,7 @@
 # checks locally, artifact URL reachability when --check-urls is passed
 # (CI passes it; local runs default to offline to stay fast).
 import json
+import os
 import re
 import sys
 import urllib.request
@@ -42,6 +43,16 @@ for e in reg.get("entries", []):
         prefix = doc.split("/")[0]
         if prefix in DOC_KINDS and DOC_KINDS[prefix] != e.get("kind"):
             errors.append(f"{eid}: doc dir {prefix} does not match kind {e.get('kind')}")
+    src = e.get("source_path")
+    if src is not None:
+        # consumers extract exactly this subtree from a pinned commit tarball
+        norm = os.path.normpath(str(src))
+        if not isinstance(src, str) or not src or src.startswith("/") or norm == "." or norm.split(os.sep)[0] == "..":
+            errors.append(f"{eid}: source_path {src!r} must be a relative in-repo directory")
+        elif not os.path.isdir(src):
+            errors.append(f"{eid}: source_path {src} missing on disk")
+        elif not os.path.isfile(os.path.join(src, "SKILL.md")):
+            errors.append(f"{eid}: source_path {src} has no SKILL.md")
     for i, a in enumerate(e.get("artifacts", []) or []):
         label = f"{eid}.artifacts[{i}]"
         for field in ("os", "arch", "url", "sha256", "size"):
