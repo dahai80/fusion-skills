@@ -44,12 +44,46 @@ stays the primary install anchor (consumers pin a commit SHA); the packaged
 artifact is a convenience mirror with its sha256 published alongside — hosts
 that prefer archives resolve it from the release without any manual step.
 
+## Trainer-mined skill libraries
+
+Skills mined from training rollouts (fusion-trainer#123: `ft skills mine`)
+publish through the same `kind=skill` flow as human-authored skills. Mark
+them with the optional `provenance` field so consumers can apply
+anti-poisoning policy before injection:
+
+```json
+{
+  "id": "my_mined_skill",
+  "kind": "skill",
+  "source_path": "skills/my_mined_skill/",
+  "doc": "skills/my_mined_skill/SKILL.md",
+  "provenance": {
+    "origin": "trainer-mined",
+    "run": "fusion-trainer#123",
+    "evidence_count": 42,
+    "verifier": "grpo-verifier-v1"
+  }
+}
+```
+
+- `origin` (required when `provenance` is present): `human-authored` or
+  `trainer-mined`
+- `run`: trainer run / tracking reference for provenance back-links
+- `evidence_count`: number of supporting rollout citations from admission
+- `verifier`: verifier summary that admitted the skill
+
+The machine payload (versioned skill-library JSONL) ships as a pinned
+release asset in `artifacts[]` — same integrity rules as plugins; text
+payloads may also stay in-repo under `source_path`. See also
+fusion-harness#174 for runtime injection.
+
 ## Checklist for a registry PR
 
 - [ ] `id` unique, `kind` one of `plugin | connector | skill | app`
 - [ ] description present in both zh and en
 - [ ] doc file exists at the declared `doc` path
 - [ ] in-repo skill: `source_path` is the skill directory (e.g. `skills/<id>/`) and contains `SKILL.md`
+- [ ] `provenance` (optional, `kind=skill` only): `origin` is `human-authored` or `trainer-mined`; `evidence_count` is a non-negative integer
 - [ ] every `artifacts[]` entry has `os`, `arch`, `url`, `sha256` (64 hex), `size`
 - [ ] binary sha256 computed over the exact uploaded file
 - [ ] install doc describes the artifact flow, not just the shell

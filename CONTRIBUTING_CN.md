@@ -36,12 +36,43 @@
 仓内 `source_path` 仍是主安装锚（消费端 pin commit SHA）；打包资产是便利镜像，
 sha256 随包发布 — 偏好压缩包的宿主可直接从 Release 解析，无需任何人工步骤。
 
+## 训练器挖掘的技能库
+
+由训练 rollout 挖掘的技能（fusion-trainer#123：`ft skills mine`）与人工编写的
+skill 走同一套 `kind=skill` 入库流程。用可选的 `provenance` 字段标注来源，
+消费者可在注入前执行防投毒策略：
+
+```json
+{
+  "id": "my_mined_skill",
+  "kind": "skill",
+  "source_path": "skills/my_mined_skill/",
+  "doc": "skills/my_mined_skill/SKILL.md",
+  "provenance": {
+    "origin": "trainer-mined",
+    "run": "fusion-trainer#123",
+    "evidence_count": 42,
+    "verifier": "grpo-verifier-v1"
+  }
+}
+```
+
+- `origin`（有 `provenance` 时必填）：`human-authored` 或 `trainer-mined`
+- `run`：训练器 run / 追踪引用，用于溯源回链
+- `evidence_count`：准入时支持的 rollout 引用数量
+- `verifier`：准入该技能的校验器摘要
+
+机器载荷（版本化技能库 JSONL）以 release 资产形式挂入 `artifacts[]`，完整性
+规则与 plugin 相同；文本载荷也可留在仓内 `source_path` 下。运行时注入见
+fusion-harness#174。
+
 ## registry PR 自查清单
 
 - [ ] `id` 唯一，`kind` ∈ plugin | connector | skill | app
 - [ ] description 中英双语齐全
 - [ ] `doc` 指向的文档真实存在
 - [ ] 仓内 skill：`source_path` 指向技能目录（如 `skills/<id>/`），且目录内有 `SKILL.md`
+- [ ] `provenance`（可选，仅 `kind=skill`）：`origin` ∈ human-authored | trainer-mined；`evidence_count` 为非负整数
 - [ ] 每个 `artifacts[]` 含 `os`、`arch`、`url`、`sha256`（64 位十六进制）、`size`
 - [ ] 二进制 sha256 按上传的原始文件计算
 - [ ] 安装文档描述基于资产的流程，而不只是 shell

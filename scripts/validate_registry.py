@@ -53,6 +53,28 @@ for e in reg.get("entries", []):
             errors.append(f"{eid}: source_path {src} missing on disk")
         elif not os.path.isfile(os.path.join(src, "SKILL.md")):
             errors.append(f"{eid}: source_path {src} has no SKILL.md")
+    prov = e.get("provenance")
+    if prov is not None:
+        # optional field for kind=skill: distinguishes human-authored vs
+        # trainer-mined entries (fusion-trainer#123 anti-poisoning transparency)
+        label = f"{eid}.provenance"
+        if e.get("kind") != "skill":
+            errors.append(f"{label}: only allowed on kind=skill")
+        if not isinstance(prov, dict):
+            errors.append(f"{label}: must be an object")
+        else:
+            origin = prov.get("origin")
+            if origin not in ("human-authored", "trainer-mined"):
+                errors.append(f"{label}: origin must be 'human-authored' or 'trainer-mined', got {origin!r}")
+            run = prov.get("run")
+            if run is not None and (not isinstance(run, str) or not run):
+                errors.append(f"{label}: run must be a non-empty string")
+            evidence = prov.get("evidence_count")
+            if evidence is not None and (not isinstance(evidence, int) or isinstance(evidence, bool) or evidence < 0):
+                errors.append(f"{label}: evidence_count must be a non-negative integer")
+            verifier = prov.get("verifier")
+            if verifier is not None and (not isinstance(verifier, str) or not verifier):
+                errors.append(f"{label}: verifier must be a non-empty string")
     for i, a in enumerate(e.get("artifacts", []) or []):
         label = f"{eid}.artifacts[{i}]"
         for field in ("os", "arch", "url", "sha256", "size"):
