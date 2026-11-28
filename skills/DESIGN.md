@@ -37,7 +37,8 @@ Two sanctioned revision sources for `SKILL.md` edits:
    retention test.
 
 Both paths end the same way: proposal → gate (C4) → human review or
-probe-gated auto-apply.
+probe-gated auto-apply. The concrete loop — proposal form, four gates,
+clean-landing rule — is `skills/EVOLUTION.md`.
 
 ## C3 — Coverage labeling before evolution spend
 

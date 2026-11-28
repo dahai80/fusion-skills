@@ -56,6 +56,17 @@ checkable at PR time:
   gated, with the unauthorized-mutation-rate column (C4). Untagged lift
   numbers do not merge.
 
+Skill revisions follow the one proposal pipeline in `skills/EVOLUTION.md`
+(via `skills/templates/revision-proposal.md`):
+
+- revisions cite labeled coverage shortfalls (follow / not-follow /
+  not-covered) — evolution spend targets real defects (C3);
+- all four gates (contract probe, unauthorized-mutation rate, hold-out
+  retention, injection-format compatibility) pass before landing;
+- clean landing: superseded text replaced in place, drafts/proposals
+  deleted or archived by the pipeline, post-landing grep/glob audit
+  (zero stale copies) pasted in the PR description.
+
 ## Trainer-mined skill libraries
 
 Skills mined from training rollouts (fusion-trainer#123: `ft skills mine`)
@@ -98,6 +109,7 @@ fusion-harness#174 for runtime injection.
 - [ ] `provenance` (optional, `kind=skill` only): `origin` is `human-authored` or `trainer-mined`; `evidence_count` is a non-negative integer
 - [ ] skill `SKILL.md` has an Inputs/Outputs artifact contract section (skills/DESIGN.md C1)
 - [ ] cited lift numbers link a contract-gated A/B report (skills/DESIGN.md C4)
+- [ ] skill revision: proposal on `skills/templates/revision-proposal.md`, four gates pass, clean-landing grep audit pasted (skills/EVOLUTION.md)
 - [ ] every `artifacts[]` entry has `os`, `arch`, `url`, `sha256` (64 hex), `size`
 - [ ] binary sha256 computed over the exact uploaded file
 - [ ] install doc describes the artifact flow, not just the shell
