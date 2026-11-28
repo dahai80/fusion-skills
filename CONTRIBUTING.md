@@ -44,6 +44,18 @@ stays the primary install anchor (consumers pin a commit SHA); the packaged
 artifact is a convenience mirror with its sha256 published alongside — hosts
 that prefer archives resolve it from the release without any manual step.
 
+## Skill design constraints
+
+`skills/DESIGN.md` is binding for every skill in this repo. Two rules are
+checkable at PR time:
+
+- `SKILL.md` declares an **Inputs / Outputs artifact contract** section
+  (composition is a DAG over artifacts, not shared context — C1).
+- Any measured skill lift cited in the description or docs links an A/B
+  report on the `skills/templates/ab-report.md` format: contract-probe
+  gated, with the unauthorized-mutation-rate column (C4). Untagged lift
+  numbers do not merge.
+
 ## Trainer-mined skill libraries
 
 Skills mined from training rollouts (fusion-trainer#123: `ft skills mine`)
@@ -84,6 +96,8 @@ fusion-harness#174 for runtime injection.
 - [ ] doc file exists at the declared `doc` path
 - [ ] in-repo skill: `source_path` is the skill directory (e.g. `skills/<id>/`) and contains `SKILL.md`
 - [ ] `provenance` (optional, `kind=skill` only): `origin` is `human-authored` or `trainer-mined`; `evidence_count` is a non-negative integer
+- [ ] skill `SKILL.md` has an Inputs/Outputs artifact contract section (skills/DESIGN.md C1)
+- [ ] cited lift numbers link a contract-gated A/B report (skills/DESIGN.md C4)
 - [ ] every `artifacts[]` entry has `os`, `arch`, `url`, `sha256` (64 hex), `size`
 - [ ] binary sha256 computed over the exact uploaded file
 - [ ] install doc describes the artifact flow, not just the shell
